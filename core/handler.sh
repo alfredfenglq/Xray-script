@@ -1994,7 +1994,10 @@ function handler_nginx_config() {
 # 返回值: 无 (通过调用 docker.sh 脚本执行操作)
 # =============================================================================
 function handler_cloudreve_v3() {
-    # 确保 Docker 已安装
+    if [[ "${1}" == 'stop' ]] && ! cmd_exists 'docker'; then
+        return 0
+    fi
+   # 确保 Docker 已安装
     handler_docker
     # 根据传入的操作参数执行对应动作
     case "${1}" in
@@ -2018,6 +2021,9 @@ function handler_cloudreve_v3() {
 # 返回值: 无 (通过调用 docker.sh 脚本执行操作)
 # =============================================================================
 function handler_cloudreve_v4() {
+    if [[ "${1}" == 'stop' ]] && ! cmd_exists 'docker'; then
+        return 0
+    fi
     # 确保 Docker 已安装
     handler_docker
     # 根据传入的操作参数执行对应动作
